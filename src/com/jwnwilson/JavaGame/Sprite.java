@@ -31,10 +31,10 @@ public class Sprite {
         // if we're going more left or right
         if(modx > mody){
             if(xSpeed > 0){
-                direction = 1;
+                direction = 2;
             }
             else{
-                direction = 2;
+                direction = 1;
             }
         }
         else{

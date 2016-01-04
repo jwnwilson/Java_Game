@@ -6,12 +6,15 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GameView extends SurfaceView {
     private Bitmap bmp;
     private SurfaceHolder holder;
     private GameLoopThread gameLoopThread;
     private Sprite sprite;
+    private List<Sprite> sprites = new ArrayList<Sprite>();
 
     public GameView(Context context) {
         super(context);
@@ -34,6 +37,7 @@ public class GameView extends SurfaceView {
 
             @Override
             public void surfaceCreated(SurfaceHolder holder) {
+                createSprites();
                 gameLoopThread.setRunning(true);
                 gameLoopThread.start();
             }
@@ -43,13 +47,33 @@ public class GameView extends SurfaceView {
                                        int width, int height) {
             }
         });
-        bmp = BitmapFactory.decodeResource(getResources(), R.drawable.sprite_1);
-        sprite = new Sprite(this,bmp);
+    }
+
+    private void createSprites() {
+        sprites.add(createSprite(R.drawable.sprite_1));
+        sprites.add(createSprite(R.drawable.sprite_1));
+        sprites.add(createSprite(R.drawable.sprite_1));
+        sprites.add(createSprite(R.drawable.sprite_1));
+        sprites.add(createSprite(R.drawable.sprite_1));
+        sprites.add(createSprite(R.drawable.sprite_1));
+        sprites.add(createSprite(R.drawable.sprite_1));
+        sprites.add(createSprite(R.drawable.sprite_1));
+        sprites.add(createSprite(R.drawable.sprite_1));
+        sprites.add(createSprite(R.drawable.sprite_1));
+        sprites.add(createSprite(R.drawable.sprite_1));
+        sprites.add(createSprite(R.drawable.sprite_1));
+    }
+
+    private Sprite createSprite(int resouce) {
+        Bitmap bmp = BitmapFactory.decodeResource(getResources(), resouce);
+        return new Sprite(this,bmp);
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         canvas.drawColor(Color.BLACK);
-        sprite.onDraw(canvas);
+        for (Sprite sprite : sprites) {
+            sprite.onDraw(canvas);
+        }
     }
 }
