@@ -23,9 +23,29 @@ public class Sprite {
     int[] DIRECTION_TO_ANIMATION_MAP = { 3, 1, 0, 2 };
 
     private int getAnimationRow() {
-        double dirDouble = (Math.atan2(xSpeed, ySpeed) / (Math.PI / 2) + 2);
-        int direction = (int) Math.round(dirDouble) % BMP_ROWS;
-        return DIRECTION_TO_ANIMATION_MAP[direction];
+        /*double dirDouble = (Math.atan2(xSpeed, ySpeed) / (Math.PI / 2) + 2);
+        int direction = (int) Math.round(dirDouble) % BMP_ROWS;*/
+        int modx = Math.abs(xSpeed);
+        int mody = Math.abs(ySpeed);
+        int direction = 0;
+        // if we're going more left or right
+        if(modx > mody){
+            if(xSpeed > 0){
+                direction = 1;
+            }
+            else{
+                direction = 2;
+            }
+        }
+        else{
+            if( ySpeed > 0 ){
+                direction = 0;
+            }
+            else{
+                direction = 3;
+            }
+        }
+        return direction;
     }
 
     public Sprite(GameView gameView, Bitmap bmp) {
