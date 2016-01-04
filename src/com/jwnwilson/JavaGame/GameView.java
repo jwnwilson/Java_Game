@@ -4,20 +4,19 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.view.SurfaceView;
 import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 
 public class GameView extends SurfaceView {
     private Bitmap bmp;
     private SurfaceHolder holder;
     private GameLoopThread gameLoopThread;
-    private int x = 0;
-    private int xSpeed = 5;
+    private Sprite sprite;
 
     public GameView(Context context) {
         super(context);
-        holder = getHolder();
         gameLoopThread = new GameLoopThread(this);
+        holder = getHolder();
         holder.addCallback(new SurfaceHolder.Callback() {
 
             @Override
@@ -44,16 +43,13 @@ public class GameView extends SurfaceView {
                                        int width, int height) {
             }
         });
-        bmp = BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher);
+        bmp = BitmapFactory.decodeResource(getResources(), R.drawable.sprite_1);
+        sprite = new Sprite(this,bmp);
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
-        if (x > getWidth() - bmp.getWidth() || x < 0) {
-            xSpeed *= -1;
-        }
-        x = x + xSpeed;
         canvas.drawColor(Color.BLACK);
-        canvas.drawBitmap(bmp, x , 10, null);
+        sprite.onDraw(canvas);
     }
 }
