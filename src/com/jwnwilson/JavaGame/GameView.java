@@ -69,7 +69,7 @@ public class GameView extends SurfaceView {
         for (Sprite sprite : sprites) {
             for( Sprite sprite_2: sprites){
                 if(sprite != sprite_2 && sprite.isCollition(sprite_2)){
-                    sprite.collisionAction();
+                    sprite.collisionAction(sprite_2);
                 }
             }
             sprite.onDraw(canvas);
