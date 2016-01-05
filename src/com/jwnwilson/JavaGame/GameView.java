@@ -8,6 +8,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import java.util.ArrayList;
 import java.util.List;
+import android.view.MotionEvent;
 
 public class GameView extends SurfaceView {
     private Bitmap bmp;
@@ -73,7 +74,23 @@ public class GameView extends SurfaceView {
     protected void onDraw(Canvas canvas) {
         canvas.drawColor(Color.BLACK);
         for (Sprite sprite : sprites) {
+            for( Sprite sprite_2: sprites){
+                if(sprite.isCollition(sprite_2)){
+                    sprite.collisionAction();
+                }
+            }
             sprite.onDraw(canvas);
         }
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        for (int i = sprites.size() - 1; i >= 0; i--) {
+            Sprite sprite = sprites.get(i);
+            if (sprite.isCollition(event.getX(), event.getY())) {
+                sprites.remove(sprite);
+            }
+        }
+        return super.onTouchEvent(event);
     }
 }
