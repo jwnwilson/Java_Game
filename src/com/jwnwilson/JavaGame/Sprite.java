@@ -104,7 +104,7 @@ public class Sprite {
     }
 
     public boolean isCollition(Sprite s1) {
-        return ! (Math.abs(x - s1.x) * 2 < (width + s1.width)) &&
+        return (Math.abs(x - s1.x) * 2 < (width + s1.width)) &&
                 (Math.abs(y - s1.y) * 2 < (height + s1.height));
     }
 }
