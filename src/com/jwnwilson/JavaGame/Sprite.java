@@ -88,10 +88,11 @@ public class Sprite {
     }
 
     public void collisionAction(Sprite s1){
-        if(last_collision != s1) {
+        if( last_collision != s1)
+        {
+            last_collision = s1;
             xSpeed *= -1;
             ySpeed *= -1;
-            last_collision = s1;
         }
     }
 

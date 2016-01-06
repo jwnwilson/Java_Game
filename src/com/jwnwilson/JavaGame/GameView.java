@@ -15,6 +15,7 @@ public class GameView extends SurfaceView {
     private SurfaceHolder holder;
     private GameLoopThread gameLoopThread;
     private Sprite sprite;
+    private int num_sprites = 10;
     private List<Sprite> sprites = new ArrayList<Sprite>();
     private long lastClick;
 
@@ -52,18 +53,10 @@ public class GameView extends SurfaceView {
     }
 
     private void createSprites() {
-        sprites.add(createSprite(R.drawable.sprite_1));
-        sprites.add(createSprite(R.drawable.sprite_1));
-        sprites.add(createSprite(R.drawable.sprite_1));
-        sprites.add(createSprite(R.drawable.sprite_1));
-        sprites.add(createSprite(R.drawable.sprite_1));
-        sprites.add(createSprite(R.drawable.sprite_1));
-        sprites.add(createSprite(R.drawable.sprite_1));
-        sprites.add(createSprite(R.drawable.sprite_1));
-        sprites.add(createSprite(R.drawable.sprite_1));
-        sprites.add(createSprite(R.drawable.sprite_1));
-        sprites.add(createSprite(R.drawable.sprite_1));
-        sprites.add(createSprite(R.drawable.sprite_1));
+        for(int i=0;i<num_sprites;i++)
+        {
+            sprites.add(createSprite(R.drawable.sprite_1));
+        }
     }
 
     private Sprite createSprite(int resouce) {
@@ -76,10 +69,8 @@ public class GameView extends SurfaceView {
         canvas.drawColor(Color.BLACK);
         for (Sprite sprite : sprites) {
             for( Sprite sprite_2: sprites){
-                if(sprite != sprite_2) {
-                    if (sprite.isCollition(sprite_2)) {
-                        sprite.collisionAction(sprite_2);
-                    }
+                if(sprite != sprite_2 && sprite.isCollition(sprite_2)){
+                    sprite.collisionAction(sprite_2);
                 }
             }
             sprite.onDraw(canvas);
