@@ -16,6 +16,7 @@ public class GameView extends SurfaceView {
     private GameLoopThread gameLoopThread;
     private Sprite sprite;
     private List<Sprite> sprites = new ArrayList<Sprite>();
+    private long lastClick;
 
     public GameView(Context context) {
         super(context);
@@ -75,8 +76,10 @@ public class GameView extends SurfaceView {
         canvas.drawColor(Color.BLACK);
         for (Sprite sprite : sprites) {
             for( Sprite sprite_2: sprites){
-                if(sprite.isCollition(sprite_2)){
-                    sprite.collisionAction();
+                if(sprite != sprite_2) {
+                    if (sprite.isCollition(sprite_2)) {
+                        sprite.collisionAction(sprite_2);
+                    }
                 }
             }
             sprite.onDraw(canvas);
@@ -85,10 +88,16 @@ public class GameView extends SurfaceView {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        for (int i = sprites.size() - 1; i >= 0; i--) {
-            Sprite sprite = sprites.get(i);
-            if (sprite.isCollition(event.getX(), event.getY())) {
-                sprites.remove(sprite);
+        if(System.currentTimeMillis() - lastClick > 500) {
+            lastClick = System.currentTimeMillis();
+            synchronized (getHolder()) {
+                for (int i = sprites.size() - 1; i >= 0; i--) {
+                    Sprite sprite = sprites.get(i);
+                    if (sprite.isCollition(event.getX(), event.getY())) {
+                        sprites.remove(sprite);
+                        break;
+                    }
+                }
             }
         }
         return super.onTouchEvent(event);

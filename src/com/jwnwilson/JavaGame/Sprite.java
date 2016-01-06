@@ -13,6 +13,7 @@ public class Sprite {
     private int right;
     private int top;
     private int bottom;
+    private Sprite last_collision;
 
     private GameView gameView;
     private Bitmap bmp;
@@ -86,9 +87,12 @@ public class Sprite {
         canvas.drawBitmap(bmp, src, dst, null);
     }
 
-    public void collisionAction(){
-        xSpeed *= -1;
-        ySpeed *= -1;
+    public void collisionAction(Sprite s1){
+        if(last_collision != s1) {
+            xSpeed *= -1;
+            ySpeed *= -1;
+            last_collision = s1;
+        }
     }
 
     public Rect getBounds() {
